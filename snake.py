@@ -1,5 +1,4 @@
 import pygame
-from game_status import game_over
 
 
 class Snake:
@@ -12,6 +11,7 @@ class Snake:
         self.y = screen_height // 2
         self.speed_x = square_size
         self.speed_y = 0
+        self.is_alive = True
 
     
     def draw(self, screen, size, head_color, body_color1, body_color2):
@@ -61,20 +61,22 @@ class Snake:
 
 
     def check_selfcollision(self):
-        global game_over
         for part in self.body[1:]:
             if part == [self.x, self.y]:
-                game_over = True
+                self.game_over()
 
 
     def check_border_collision(self, screen_width, screen_height):
-        global game_over
         if (self.x < 0) or (self.x >= screen_width) or (self.y < 0) or (self.y >= screen_height):
-            game_over = True
+            self.game_over()
 
     
     def show_score(self, screen, score, color):
         font = pygame.font.SysFont("Helvetica", 40)
         text = font.render(f"Score: {score}", True, color)
         screen.blit(text, [1, 1])
+
+    
+    def game_over(self):
+        self.is_alive = False
     

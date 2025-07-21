@@ -1,7 +1,6 @@
 import pygame
 from snake import Snake
 from food import Food
-from game_status import game_over
 
 black = (0, 0, 0)
 red = (255, 0, 0)
@@ -18,19 +17,17 @@ clock = pygame.time.Clock()
 square_size = 20
 
 def play_game():
-    global game_over
-    game_over = False
     snake = Snake(square_size, 15, 1200, 800)
     food = Food(square_size, red)
 
     food_x, food_y = food.generate(screen_width, screen_height)
 
-    while not game_over:
+    while snake.is_alive:
         screen.fill(grass_green)
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                game_over = True
+                snake.game_over()
             elif event.type == pygame.KEYDOWN:
                 snake.speed_x, snake.speed_y = snake.select_speed(event.key, snake.speed_x, snake.speed_y)
 
