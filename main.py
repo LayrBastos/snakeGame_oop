@@ -10,14 +10,14 @@ grass_green = (76, 153, 0)
 
 pygame.init()
 pygame.display.set_caption("Snake Game")
-screen_width, screen_height = 1200, 800
+screen_width, screen_height = 800, 600
 screen = pygame.display.set_mode((screen_width, screen_height))
 clock = pygame.time.Clock()
 
 square_size = 20
 
 def play_game():
-    snake = Snake(square_size, 15, 1200, 800)
+    snake = Snake(square_size, 15, screen_width, screen_height)
     food = Food(square_size, red)
 
     food_x, food_y = food.generate(screen_width, screen_height)
@@ -45,7 +45,7 @@ def play_game():
 
         if (snake.x == food_x) and (snake.y == food_y):
             snake.size += 1
-            food_x, food_y = food.generate()
+            food_x, food_y = food.generate(screen_width, screen_height)
         
         clock.tick(snake.game_speed)
 
